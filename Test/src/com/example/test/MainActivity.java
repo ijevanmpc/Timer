@@ -2,9 +2,8 @@ package com.example.test;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import android.app.Activity;
 import android.os.Bundle;
+import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,7 +14,6 @@ public class MainActivity extends Activity {
 	EditText mText;
 	Button mStart;
 	Button mStop;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +52,26 @@ public class MainActivity extends Activity {
 
 		mStop.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {}
+			public void onClick(View v) {
+				final TimerTask Task = new TimerTask() {
+					@Override
+					public void run() {
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								try {
+									Thread.currentThread().sleep(3000);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+						});
+					}
+				};
+				Timer countdown = new Timer();
+				countdown.schedule(Task, 0, 1000);
+			}
 		});
+
 	}
 }
